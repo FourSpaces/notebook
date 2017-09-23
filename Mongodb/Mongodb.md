@@ -12,39 +12,25 @@ mongod --dbpath /data/mongodb/db --logpath /data/mongodb/log/mongodb.log --logap
 
 # 教程链接地址：http://blog.csdn.net/flyfish111222/article/details/51886787
 -------------------------------------------------------------
-SQL术语/概念| 	MongoDB术语/概念     解释/说明
-database    |	database 	|   数据库
+
+
+SQL术语/概念    | 	MongoDB术语/概念  |   解释/说明
+
+—|—|—
+
+database  |	database 	|   数据库
 table       |   collection 	|   数据库表/集合
 row 	    |   document 	|   数据记录行/文档
 column      |   field 	        |   数据字段/域
 index 	    |   index 	        |   索引
-table joins |	表连接,MongoDB不支持
+table joins |	表连接,MongoDB | 不支持
+
 primary key |	primary key 	|   主键,MongoDB自动将_id字段设置为主键
 --------------------------------------------------------------
 
 
 
-常见命令：
-创建数据库：use DATABASE_NAME
-[如果数据库不存在，则创建数据库，否则切换到指定数据库]
-
-查看所有数据库：show dbs
-[创建的数据库中 没有数据的时候，不显示数据库名]
-复制数据库
-数据表的复制 db.runCommand({cloneCollection:"commit.daxue",from:"198.61.104.31:27017"});
-数据库的复制  db.copyDatabase("user","user","198.61.104.31:27017");
-
-向数据库[runoob]中插入数据：db.runoob.insert({"name":"xiaoming"})
-
-删除数据库，切换到对应的库，执行：db.dropDatabase() 
-删除集合，切换到对应的库，执行：db.collection.drop() 
-[collection 为对应的集合]
-
-
-
-
-
-# MongoDB 工具
+## MongoDB 工具
 
 MongoDB 在 bin 目录下提供了一系列有用的工具，这些工具提供了 MongoDB 在运维管理上 的方便。
 
@@ -98,9 +84,13 @@ MongoDB 在 bin 目录下提供了一系列有用的工具，这些工具提供�
 
    启动 成功后，mongo 会运行一个http服务器，能够获取 数据库 的信息
 
-```
-http://localhost:28017
-```
+  ```
+  http://localhost:28017
+  ```
+
+
+
+
 
 
 
@@ -109,10 +99,11 @@ http://localhost:28017
 -  启动shell
 
   ```
-  $ mongo  #运行mongo启动shell
+  $ mongo  
+  #运行mongo启动mongo shell
   ```
 
--  连接数据库🔗
+- 连接数据库🔗
 
    ```
 
@@ -120,31 +111,145 @@ http://localhost:28017
 
    ​
 
--  查看数据库列表
+- 查看数据库列表
 
    ```
    show dbs
    ```
 
--  切换到数据库
+- 切换到数据库
 
    ```
-
+   use 
    ```
 
    ​
 
--  ​
+- ​
 
--  查看数据库中的集合列表
+- 查看数据库中的集合列表
 
    ```
    show tables
    ```
 
+- 显示当前使用的数据库
+
+   ```
+   db
+   #默认数据库为test
+   ```
+
+- 切换数据库
+
+   ```
+   use <db>
+   use test
+   ```
+
+- 列出可用数据库
+
+   ```
+   show dbs
+   ```
+
+- 插入数据
+
+   ```
+   # 语法格式
+   db.COLLECTION_NAME.insert(document)
+
+   >db.col.insert({title: 'MongoDB 教程', 
+       by: '菜鸟教程',
+       url: 'http://www.runoob.com',
+       likes: 100
+   })
+
+   将文档插入到名为col的集合中。如果col集合当前不存在，操作将创建集合,并插入数据
+   ```
+
+- 查询数据
+
+   ```
+   # 语法格式
+   db.collection.find(query, projection)
+   # query : 可选，使用查询操作符指定查询条件
+   # projection : 可选，使用投影操作符指定返回的键，默认查询时返回文档中所有键值，默认省略
+
+   >db.col.find().pretty()
+   # pretty() 方法用来格式化数据
+   ```
+
+-  删除数据库
+
+-  删除集合
+
+   ```
+   db.collection.drop()
+   ```
+
    ​
 
 
 
+
+
+
+
+
+
+
+   ```
+
+-  - 查询集合中数据总量
+
+   ```
+     db.barber_comment_infos.find({}).count();
+     ```
+    
+     ​
+
+
+##  
+
+Query 条件
+
+### MongoDB 与 RDBMS Where 语句比较
+
+如果你熟悉常规的 SQL 数据，通过下表可以更好的理解 MongoDB 的条件语句查询：
+
+| 操作    | 格式                       | RDBMS中的类似语句         | 范例                                       |
+| ----- | ------------------------ | ------------------- | ---------------------------------------- |
+| 等于    | `{<key>:<value>`}        | `where by = '菜鸟教程'` | `db.col.find({"by":"菜鸟教程"}).pretty()`    |
+| 小于    | `{<key>:{$lt:<value>}}`  | `where likes < 50`  | `db.col.find({"likes":{$lt:50}}).pretty()` |
+| 小于或等于 | `{<key>:{$lte:<value>}}` | `where likes <= 50` | `db.col.find({"likes":{$lte:50}}).pretty()` |
+| 大于    | `{<key>:{$gt:<value>}}`  | `where likes > 50`  | `db.col.find({"likes":{$gt:50}}).pretty()` |
+| 大于或等于 | `{<key>:{$gte:<value>}}` | `where likes >= 50` | `db.col.find({"likes":{$gte:50}}).pretty()` |
+| 不等于   | `{<key>:{$ne:<value>}}`  | `where likes != 50` | `db.col.find({"likes":{$ne:50}}).pretty()` |
+
+------
+
+MongoDB OR 条件语句使用了关键字 **$or**,语法格式如下：
+
+```
+>db.col.find(
+   {
+      $or: [
+	     {key1: value1}, {key2:value2}
+      ]
+   }
+).pretty()
+```
+
 # pymongo 安装
+
+
+
+
+
+## 包组件 mongoexport
+
+`mongoexport` 是一个实用程序，可以生成一个JSON或CSV导出存储在MongoDB实例中的数据。
+
+`mongoexport`从系统命令行运行，而不是[`mongo`](https://docs.mongodb.com/manual/reference/program/mongo/#bin.mongo)shell。
 

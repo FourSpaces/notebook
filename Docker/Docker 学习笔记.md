@@ -75,9 +75,9 @@
 
   ```
   cat /etc/os-release
-  ```
 
-- 镜像定制
+  ```
+  #### 镜像定制
 
   我们修改了容器的文件，也就是改动了容器的存储层。我们可以通过 `docker diff` 命令看到具体的改动
 
@@ -113,6 +113,8 @@
   $ mkdir mynginx
   $ cd mynginx
   $ touch Dockerfile
+
+  $ docker build -t nginx:v3 .
   ```
 
 
@@ -233,7 +235,7 @@
   守护式容器没有交互模式，适合运行应用程序和服务。
 
   ```
-  $ docker run --name daemon_dave -d ubuntu /bin/sh -c "while true; do echo hello world ; sleep 1; done"
+  $ docker run --name daemon_dave -d ubuntu /bin/bash -c "while true; do echo hello world ; sleep 1; done"
   20479f4a9dfbfc205039e1e68f8f0f65de33722133f7ae269c15dd466bd21b10
   ```
 
@@ -259,6 +261,10 @@
 
 
 
+Docker 文档地址 
+
+https://yeasy.gitbooks.io/docker_practice/content/underly/network.html
+
 
 
 # Docker 基础命令
@@ -269,6 +275,10 @@
 
   ```
   $ docker search [镜像名]
+
+  --automated :只列出 automated build类型的镜像；
+  --no-trunc :显示完整的镜像描述；
+  -s :列出收藏数不小于指定值的镜像。
   ```
 
 - 获得镜像Pull
@@ -318,3 +328,37 @@
   ```
 
   ​
+
+- 删除所有停止的容器
+
+  ```
+  docker rm $(docker ps -a -q)
+  ```
+
+- 删除所有 none 的镜像
+
+  ```
+  docker rmi $(docker images | grep "^<none>" | awk "{print $3}")
+
+  docker rmi $(docker images -f "dangling=true" -q)
+  ```
+
+- 进入容器中 docker exec
+
+  ```
+  [root@localhost temp]# docker exec -it bb2 /bin/bash
+  ```
+
+  使用-it时，则和我们平常操作console界面类似。而且也不会像attach方式因为退出，导致 
+  整个容器退出。 
+  这种方式可以替代ssh或者nsenter、nsinit方式，在容器内进行操作。
+
+  如果只使用-t参数，则可以看到一个console窗口，但是执行命令会发现由于没有获得stdin 
+  的输出，无法看到命令执行情况。
+
+
+
+
+
+-------
+
