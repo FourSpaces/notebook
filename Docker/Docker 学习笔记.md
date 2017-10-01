@@ -355,10 +355,111 @@ https://yeasy.gitbooks.io/docker_practice/content/underly/network.html
 
   如果只使用-t参数，则可以看到一个console窗口，但是执行命令会发现由于没有获得stdin 
   的输出，无法看到命令执行情况。
-
-
-
-
-
 -------
+
+- Docker 容器中常用功能
+```
+Management Commands:
+  checkpoint  <管理检查点> Manage checkpoints 
+  config      <管理Docker配置> Manage Docker configs
+  container   <管理容器> Manage containers
+  image       <管理镜像> Manage images
+  network     <管理网络> Manage networks
+  node        <管理Swarm节点> Manage Swarm nodes
+  plugin      <管理插件> Manage plugins
+  secret      <管理Docker的秘密> Manage Docker secrets
+  service     <管理服务> Manage services
+  stack       <管理Docker堆栈> Manage Docker stacks
+  swarm       <管理群> Manage Swarm
+  system      <管理Docker> Manage Docker
+  volume      <管理卷> Manage volumes
+
+Commands:
+  attach      <将本地标准输入，输出和错误流附加到正在运行的容器> 
+              Attach local standard input, output, and error streams to a running container
+  build       <从Dockerfile构建映像> 
+              Build an image from a Dockerfile
+  commit      <从容器的更改创建一个新的图像>
+              Create a new image from a container's changes
+  cp          <复制容器和本地文件系统之间的文件/文件夹> 
+              Copy files/folders between a container and the local filesystem
+  create      <创建一个新的容器>
+              Create a new container
+  deploy      <部署新堆栈或更新现有堆栈> 
+              Deploy a new stack or update an existing stack
+  diff        <检查对容器文件系统上文件或目录的更改> 
+              Inspect changes to files or directories on a container's filesystem
+  events      <从服务器获取实时事件>
+              Get real time events from the server
+  exec        <在运行容器中运行命令> 
+              Run a command in a running container
+  export      <将容器的文件系统导出为tar存档> 
+              Export a container's filesystem as a tar archive
+              
+  history     <显示图片/快照的历史> 
+              Show the history of an image
+  images      <列出镜像> 
+              List images
+  import      <从tarball导入内容以创建文件系统映像> 
+              Import the contents from a tarball to create a filesystem image
+  info        <显示系统范围的信息>
+              Display system-wide information
+  inspect     <返回关于Docker对象的低级信息> 
+              Return low-level information on Docker objects
+  kill        <杀死一个或多个运行容器> 
+              Kill one or more running containers
+  load        <从tar存档或STDIN加载映像> 
+              Load an image from a tar archive or STDIN
+  login       <登录Docker> 
+              Log in to a Docker registry
+  logout      <从Docker注销> 
+              Log out from a Docker registry
+  logs        <获取容器的日志> 
+              Fetch the logs of a container
+  pause       <暂停一个或多个容器内的所有进程> 
+              Pause all processes within one or more containers
+  port        <列表端口映射或容器的特定映射> 
+              List port mappings or a specific mapping for the container
+  ps          <列出容器> 
+              List containers
+  pull        <从Docker仓库中拉一个图像或存储库>
+              Pull an image or a repository from a registry
+  push        <将图像或存储库推送到docker存储库>
+              Push an image or a repository to a registry
+  rename      <重命名容器> 
+              Rename a container
+  restart     <重新启动一个或多个容器> 
+              Restart one or more containers
+  rm          <删除一个或多个容器> 
+              Remove one or more containers
+  rmi         <删除一个或多个镜像> 
+              Remove one or more images
+  run         <在新容器中运行命令>
+              Run a command in a new container
+  save        <将一个或多个图像保存到tar存档（默认情况下流式传输到STDOUT）> 
+              Save one or more images to a tar archive (streamed to STDOUT by default)
+  search      <搜索Docker Hub图像> 
+              Search the Docker Hub for images
+  start       <启动一个或多个停止的容器> 
+              Start one or more stopped containers
+  stats       <显示容器的实时流资源使用统计信息> 
+              Display a live stream of container(s) resource usage statistics
+  stop        <停止一个或多个运行容器>
+              Stop one or more running containers
+  tag         <创建引用SOURCE_IMAGE的标签TARGET_IMAGE>
+              Create a tag TARGET_IMAGE that refers to SOURCE_IMAGE
+  top         <显示容器的正在运行的进程>
+              Display the running processes of a container
+  unpause     <取消暂停一个或多个容器内的所有进程> 
+              Unpause all processes within one or more containers
+  update      <更新一个或多个容器的配置> 
+              Update configuration of one or more containers
+  version     <显示Docker版本信息> 
+              Show the Docker version information
+  wait        <阻止直到一个或多个容器停止，然后打印他们的退出代码>
+              Block until one or more containers stop, then print their exit codes
+
+有关命令的更多信息，请运行'docker COMMAND --help'。
+
+```
 
