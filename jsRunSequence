@@ -1,0 +1,110 @@
+jsRunSequence
+
+https://awp-assets.meituan.net/hfe/rohr/1.0.2/rohr.min.js
+https://res.wx.qq.com/open/js/jweixin-1.0.0.js
+http://analytics.meituan.net/analytics.js
+http://xs01.meituan.net/waimai_i/js/page/home/unbotify.6bd958ed.js
+
+
+
+!function(e, t, n) {
+    function s() {
+        var e = t.createElement("script");
+        e.async = !0,
+        e.src = "//s0.meituan." + ( - 1 === t.location.protocol.indexOf("https") ? "net": "com") + "/bs/js/?f=mta-js:mta.min.js";
+        var n = t.getElementsByTagName("script")[0];
+        n.parentNode.insertBefore(e, n)
+    }
+    if (e.MeituanAnalyticsObject = n, e[n] = e[n] ||
+    function() { (e[n].q = e[n].q || []).push(arguments)
+    },
+    "complete" === t.readyState) s();
+    else {
+        var i = "addEventListener",
+        r = "attachEvent";
+        if (e[i]) e[i]("load", s, !1);
+        else if (e[r]) e[r]("onload", s);
+        else {
+            var a = e.onload;
+            e.onload = function() {
+                s(),
+                a && a()
+            }
+        }
+    }
+} (window, document, "mta"),
+function(e, t, n) {
+    if (t && !("_mta" in t)) {
+        t._mta = !0;
+        var s = e.location.protocol;
+        if ("file:" !== s) {
+            var i = e.location.host,
+            r = t.prototype.open;
+            t.prototype.open = function(t, n, a, o, l) {
+                if (this._method = "string" == typeof t ? t.toUpperCase() : null, n) {
+                    if (0 === n.indexOf("http://") || 0 === n.indexOf("https://") || 0 === n.indexOf("//")) this._url = n;
+                    else if (0 === n.indexOf("/")) this._url = s + "//" + i + n;
+                    else {
+                        var h = s + "//" + i + e.location.pathname;
+                        h = h.substring(0, h.lastIndexOf("/") + 1),
+                        this._url = h + n
+                    }
+                    var u = this._url.indexOf("?"); - 1 !== u ? (this._searchLength = this._url.length - 1 - u, this._url = this._url.substring(0, u)) : this._searchLength = 0
+                } else this._url = null,
+                this._searchLength = 0;
+                return this._startTime = (new Date).getTime(),
+                r.apply(this, arguments)
+            };
+            var a = "onreadystatechange",
+            o = "addEventListener",
+            l = t.prototype.send;
+            t.prototype.send = function(t) {
+                function n(n, i) {
+                    if (0 !== n._url.indexOf(s + "//frep.meituan.net/_.gif")) {
+                        var r;
+                        if (n.response) switch (n.responseType) {
+                        case "json":
+                            r = JSON && JSON.stringify(n.response).length;
+                            break;
+                        case "blob":
+                        case "moz-blob":
+                            r = n.response.size;
+                            break;
+                        case "arraybuffer":
+                            r = n.response.byteLength;
+                        case "document":
+                            r = n.response.documentElement && n.response.documentElement.innerHTML && n.response.documentElement.innerHTML.length + 28;
+                            break;
+                        default:
+                            r = n.response.length
+                        }
+                        e.mta("send", "browser.ajax", {
+                            url: n._url.replace(/\.[^\.]*\.css/, '/css').replace(/\.[^\.]*\.js/, '/js'),
+                            method: n._method,
+                            error: !(0 === n.status.toString().indexOf("2") || 304 === n.status),
+                            responseTime: (new Date).getTime() - n._startTime,
+                            requestSize: n._searchLength + (t ? t.length: 0),
+                            responseSize: r || 0
+                        })
+                    }
+                }
+                if (o in this) {
+                    var i = function(e) {
+                        n(this, e)
+                    };
+                    this[o]("load", i),
+                    this[o]("error", i),
+                    this[o]("abort", i)
+                } else {
+                    var r = this[a];
+                    this[a] = function(t) {
+                        r && r.apply(this, arguments),
+                        4 === this.readyState && e.mta && n(this, t)
+                    }
+                }
+                return l.apply(this, arguments)
+            }
+        }
+    }
+} (window, window.XMLHttpRequest, "mta");
+
