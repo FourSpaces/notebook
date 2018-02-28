@@ -2,8 +2,6 @@
 
 当Dalvik 虚拟机从Android应用程序框架中启动时，系统属性ro.debuggable 为1 ，可使用 adb shell getprop ro.debuggable 来检查，所有程序都开启调试支持，若为0，则判断程序 androidManifest.xml
 
-
-
 在上一篇中讲到了关于Android so的动态调试，没看的可以点这里：[点击打开链接](http://blog.csdn.net/feibabeibei_beibei/article/details/52740212)；
 
 我自认为写的还是挺全的，在上文中我们说到关于最后一步jdb附加调试时，很多时候都会出现附加不上的问题，使人很闹心。。。于是这一篇就是专门关于这个问题进行展开的。解决这个问题方法有很多，我是按照自己认为的优良答案顺序展开的，都是借鉴网上的各路大神而总结的。
