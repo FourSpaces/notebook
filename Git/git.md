@@ -24,6 +24,8 @@ git commit -m "first commit"
 
 git remote add origin git@github.com:zaoshu/tianqibao.git
 
+git remote add scrapy_zs git@github.com:zaoshu/scrapy_zs.git
+
 #### push 到远程
 
 git push origin master

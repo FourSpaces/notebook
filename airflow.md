@@ -62,6 +62,9 @@ FLUSH PRIVILEGES;
 
 
 
+
+
+
 -------------------------------------------
 
 # Airflow usage
@@ -854,3 +857,147 @@ fi
 ### Original link
 
 原文链接 <http://blog.genesino.com//2016/05/airflow/>
+
+
+
+
+
+## Airflow 例子解析
+
+- example_bash_operator , 例子_bash_operator 算得上一个基础的operator 例子
+
+  ```python
+  # -*- coding: utf-8 -*-
+  #
+  # Licensed under the Apache License, Version 2.0 (the "License");
+  # you may not use this file except in compliance with the License.
+  # You may obtain a copy of the License at
+  #
+  # http://www.apache.org/licenses/LICENSE-2.0
+  #
+  # Unless required by applicable law or agreed to in writing, software
+  # distributed under the License is distributed on an "AS IS" BASIS,
+  # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  # See the License for the specific language governing permissions and
+  # limitations under the License.
+
+  import airflow
+  from builtins import range
+  from airflow.operators.bash_operator import BashOperator
+  from airflow.operators.dummy_operator import DummyOperator
+  from airflow.models import DAG
+  from datetime import timedelta
+
+
+  args = {
+      'owner': 'airflow',
+      'start_date': airflow.utils.dates.days_ago(2)
+  }
+
+  dag = DAG(
+      dag_id='example_bash_operator', default_args=args,
+      schedule_interval='0 0 * * *',
+      dagrun_timeout=timedelta(minutes=60))
+
+  cmd = 'ls -l'
+  run_this_last = DummyOperator(task_id='run_this_last', dag=dag)
+
+  run_this = BashOperator(
+      task_id='run_after_loop', bash_command='echo 1', dag=dag)
+  run_this.set_downstream(run_this_last)
+
+  for i in range(3):
+      i = str(i)
+      task = BashOperator(
+          task_id='runme_'+i,
+          bash_command='echo "{{ task_instance_key_str }}" && sleep 1',
+          dag=dag)
+      task.set_downstream(run_this)
+
+  task = BashOperator(
+      task_id='also_run_this',
+      bash_command='echo "run_id={{ run_id }} | dag_run={{ dag_run }}"',
+      dag=dag)
+  task.set_downstream(run_this_last)
+
+  if __name__ == "__main__":
+      dag.cli()
+  ```
+
+- example_branch_dop_operator_v3， dop分支 operator
+
+  ```
+
+  ```
+
+
+
+### docker_operator
+
+```
+Execute a command inside a docker container.
+
+    A temporary directory is created on the host and mounted into a container to allow storing files
+    that together exceed the default disk size of 10GB in a container. The path to the mounted
+    directory can be accessed via the environment variable ``AIRFLOW_TMP_DIR``.
+
+    If a login to a private registry is required prior to pulling the image, a
+    Docker connection needs to be configured in Airflow and the connection ID
+    be provided with the parameter ``docker_conn_id``.
+
+    :param image: Docker image from which to create the container.
+    :type image: str
+    :param api_version: Remote API version. Set to ``auto`` to automatically
+        detect the server's version.
+    :type api_version: str
+    :param command: Command to be run in the container.
+    :type command: str or list
+    :param cpus: Number of CPUs to assign to the container.
+        This value gets multiplied with 1024. See
+        https://docs.docker.com/engine/reference/run/#cpu-share-constraint
+    :type cpus: float
+    :param docker_url: URL of the host running the docker daemon.
+        Default is unix://var/run/docker.sock
+    :type docker_url: str
+    :param environment: Environment variables to set in the container.
+    :type environment: dict
+    :param force_pull: Pull the docker image on every run. Default is false.
+    :type force_pull: bool
+    :param mem_limit: Maximum amount of memory the container can use. Either a float value, which
+        represents the limit in bytes, or a string like ``128m`` or ``1g``.
+    :type mem_limit: float or str
+    :param network_mode: Network mode for the container.
+    :type network_mode: str
+    :param tls_ca_cert: Path to a PEM-encoded certificate authority to secure the docker connection.
+    :type tls_ca_cert: str
+    :param tls_client_cert: Path to the PEM-encoded certificate used to authenticate docker client.
+    :type tls_client_cert: str
+    :param tls_client_key: Path to the PEM-encoded key used to authenticate docker client.
+    :type tls_client_key: str
+    :param tls_hostname: Hostname to match against the docker server certificate or False to
+        disable the check.
+    :type tls_hostname: str or bool
+    :param tls_ssl_version: Version of SSL to use when communicating with docker daemon.
+    :type tls_ssl_version: int
+    :param tmp_dir: Mount point inside the container to a temporary directory created on the host by
+        the operator. The path is also made available via the environment variable
+        ``AIRFLOW_TMP_DIR`` inside the container.
+    :type tmp_dir: str
+    :param user: Default user inside the docker container.
+    :type user: int or str
+    :param volumes: List of volumes to mount into the container, e.g.
+        ``['/host/path:/container/path', '/host/path2:/container/path2:ro']``.
+    :param working_dir: Working directory to set on the container (equivalent to the -w switch
+        the docker client)
+    :type working_dir: str
+    :param xcom_push: Does the stdout will be pushed to the next step using XCom.
+           The default is False.
+    :type xcom_push: bool
+    :param xcom_all: Push all the stdout or just the last line. The default is False (last line).
+    :type xcom_all: bool
+    :param auto_remove: Automatically remove the container when it exits
+    :type auto_remove: bool
+    :param docker_conn_id: ID of the Airflow connection to use
+    :type docker_conn_id: str
+```
+

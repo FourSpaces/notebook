@@ -1,7 +1,5 @@
 ## Docker 学习笔记
 
-s
-
 ### Docker环境安装
 
 启动终端后，通过命令可以检查安装后的 Docker 版本。
@@ -46,7 +44,6 @@ root      5346     1  0 19:03 ?        00:00:00 /usr/bin/dockerd --registry-mirr
 
 ```
 docker pull [选项] [Docker Registry地址]<仓库名>:<标签>
-
 ```
 
 具体的选项可以通过 `docker pull --help` 命令看到，这里我们说一下镜像名称的格式。
@@ -97,7 +94,46 @@ docker commit [选项] <容器ID或容器名> [<仓库名>[:<标签>]]
 
 ```
 docker build [选项] <上下文路径/URL/->
+
 ```
+
+```
+Usage:	docker build [OPTIONS] PATH | URL | -
+
+Build an image from a Dockerfile
+
+Options:
+      --add-host list           Add a custom host-to-IP mapping (host:ip)
+      --build-arg list          Set build-time variables
+      --cache-from strings      Images to consider as cache sources
+      --cgroup-parent string    Optional parent cgroup for the container
+      --compress                Compress the build context using gzip
+      --cpu-period int          Limit the CPU CFS (Completely Fair Scheduler) period
+      --cpu-quota int           Limit the CPU CFS (Completely Fair Scheduler) quota
+  -c, --cpu-shares int          CPU shares (relative weight)
+      --cpuset-cpus string      CPUs in which to allow execution (0-3, 0,1)
+      --cpuset-mems string      MEMs in which to allow execution (0-3, 0,1)
+      --disable-content-trust   Skip image verification (default true)
+  -f, --file string             Name of the Dockerfile (Default is 'PATH/Dockerfile')
+      --force-rm                Always remove intermediate containers
+      --iidfile string          Write the image ID to the file
+      --isolation string        Container isolation technology
+      --label list              Set metadata for an image
+  -m, --memory bytes            Memory limit
+      --memory-swap bytes       Swap limit equal to memory plus swap: '-1' to enable unlimited swap
+      --network string          Set the networking mode for the RUN instructions during build (default "default")
+      --no-cache                Do not use cache when building the image
+      --pull                    Always attempt to pull a newer version of the image
+  -q, --quiet                   Suppress the build output and print image ID on success
+      --rm                      Remove intermediate containers after a successful build (default true)
+      --security-opt strings    Security options
+      --shm-size bytes          Size of /dev/shm
+  -t, --tag list                Name and optionally a tag in the 'name:tag' format
+      --target string           Set the target build stage to build.
+      --ulimit ulimit           Ulimit options (default [])
+```
+
+
 
 在一个空白目录中，建立一个文本文件，并命名为 `Dockerfile`：
 
@@ -251,12 +287,27 @@ https://yeasy.gitbooks.io/docker_practice/content/underly/network.html
   ```
 
   - docker run - 运行一个容器
+
   - -t - 分配一个（伪）tty (link is external)
+
   - -i - 交互模式 (so we can interact with it)
+
   - ubuntu:14.04 - 使用 ubuntu 基础镜像 14.04
+
   - /bin/bash - 运行命令 bash shell
 
     注: ubuntu 会有多个版本，通过指定 tag 来启动特定的版本 [image]:[tag]
+
+- 重命名镜像
+
+  ```
+  docker tag IMAGEID(镜像id) REPOSITORY:TAG（仓库：标签）
+
+  #例子
+  docker tag ca1b6b825289 registry.cn-hangzhou.aliyuncs.com/xxxxxxx:v1.0
+  ```
+
+  ​
 
 - 查看Docker 容器运行列表。
 
@@ -289,9 +340,9 @@ https://yeasy.gitbooks.io/docker_practice/content/underly/network.html
 - 删除所有 none 的镜像
 
   ```
-  docker rmi $(docker images | grep "^<none>" | awk "{print $3}")
+  docker rmi `docker images | grep "^<none>" | awk '{print $3}'`
 
-  docker rmi $(docker images -f "dangling=true" -q)
+  docker rmi `docker images -f "dangling=true" -q`
   ```
 
 - 进入容器中 docker exec
@@ -583,5 +634,57 @@ Commands:
   wait        Block until one or more containers stop, then print their exit codes
 
 Run 'docker COMMAND --help' for more information on a command.
+```
+
+
+
+# 热门镜像
+
+### Mongodb
+
+https://blog.igevin.info/posts/docker-mongo-auth/
+
+> 数据存储位置
+
+Docker文档是了解不同存储选项和变体的一个很好的起点，并且有多个博客和论坛帖子可以讨论和提供这方面的建议。我们将简单地在上面显示后面的选项的基本过程：
+
+1. 在主机系统的适当卷上创建一个数据目录，例如`/my/own/datadir`。
+
+2. `mongo`像这样启动你的容器：
+
+   ```
+   $ docker run --name my-mongo -v /my/own/datadir:/data/db -d mongo:tag
+
+   docker run --name my-mongo -v /Users/weicheng/data/mongo:/data/db -d mongo:3.7 
+   ```
+
+该`-v /my/own/datadir:/data/db`命令的一部分将容器内`/my/own/datadir`的底层主机系统的目录挂载`/data/db`，其中默认情况下MongoDB将写入其数据文件。
+
+> 外部访问
+
+```
+$ docker run -it --rm --link some-mongo:mongo mongo mongo -u jsmith -p some-initial-password --authenticationDatabase admin some-mongo/some-db
+> db.getName();
+some-db
+```
+
+
+
+>
+
+```
+docker run --name my-mongo -v /Users/weicheng/data/mongo:/data/db -p 27017:27017  -d mongo:3.7 mongod -bind_ip 10.10.10.*
+```
+
+
+
+## Redis
+
+>  数据存储位置
+
+```
+docker run --name some-redis  -v /Users/weicheng/data/redis:/data  -p 6379:6379 -d redis redis-server -bind 10.10.10.* --appendonly yes 
+
+docker run --name my-redis  -v /Users/weicheng/data/redis:/data  -p 6379:6379 -d redis:4.0 redis-server -bind_ip 10.10.10.*
 ```
 

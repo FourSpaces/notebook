@@ -470,34 +470,33 @@ class LinkItem(Item):
     Rule
     ```
 
-     
 
     对象实例化常用的三个参数：
-
+    
     ```
     link_extractor
     ```
 
-     
+​     
 
     /
 
-     
+​     
 
     ```
     callback
     ```
 
-     
+​     
 
     /
 
-     
+​     
 
     ```
     follow
     ```
-
+    
     - `link_extractor` 是一个 `LinkExtractor` 对象。 其定义了如何从爬取到的页面提取链接
     - `callback` 是一个 callable 或 string (该spider中同名的函数将会被调用)。 从 link_extractor中每获取到链接时将会调用该函数。该回调函数接受一个response作为其第一个参数， 并返回一个包含 Item 以及(或) Request 对象(或者这两者的子类)的列表(list)。
     - `follow` 是一个布尔(boolean)值，指定了根据该规则从response提取的链接是否需要跟进。 如果 callback 为None， follow 默认设置为 True ，否则默认为 False 。
@@ -508,7 +507,6 @@ class LinkItem(Item):
   ebay_main_lx
   ```
 
-   
 
   /
 
@@ -522,10 +520,9 @@ class LinkItem(Item):
     LinkExtractor
     ```
 
-     
 
     对象
-
+    
     - `allow` (a regular expression (or list of)) – 必须要匹配这个正则表达式(或正则表达式列表)的URL才会被提取｡如果没有给出(或为空), 它会匹配所有的链接｡
     - `deny` 排除正则表达式匹配的链接（优先级高于allow）
     - `allow_domains` 允许的域名（可以是str或list）
@@ -541,7 +538,6 @@ class LinkItem(Item):
   parse_main
   ```
 
-   
 
   /
 
@@ -557,7 +553,6 @@ class LinkItem(Item):
   _filter_url
   ```
 
-   
 
   /
 
@@ -855,38 +850,4 @@ def _filter_url(self, redis, url, key="ebay_slave:start_urls"):
 [scrapy_redis去重优化](http://blog.csdn.net/bone_ace/article/details/53099042)
 [基于Scrapy-Redis的分布式以及cookies池](http://cuiqingcai.com/4048.html)
 
-** 日记本
 
-© 著作权归作者所有
-
-[举报文章]()
-
-![96](http://upload.jianshu.io/users/upload_avatars/5013371/f0fb2d07-744c-40c9-b2d7-ea1320220294?imageMogr2/auto-orient/strip|imageView2/1/w/96/h/96)
-
-**关注
-
-无口会咬人
-
-写了 4030 字，被 6 人关注，获得了 13 个喜欢
-
-小礼物走一走，来简书关注我
-
-赞赏支持
-
-[**喜欢](http://www.jianshu.com/sign_in?utm_source=desktop&utm_medium=not-signed-in-like-button)
-
- 
-
-[13]()
-
-[**]() [**](javascript:void((function(s,d,e,r,l,p,t,z,c){var%20f='http://v.t.sina.com.cn/share/share.php?appkey=1881139527',u=z||d.location,p=['&url=',e(u),'&title=',e(t||d.title),'&source=',e(r),'&sourceUrl=',e(l),'&content=',c||'gb2312','&pic=',e(p||'')].join('');function%20a(){if(!window.open([f,p].join(''),'mb',['toolbar=0,status=0,resizable=1,width=440,height=430,left=',(s.width-440)/2,',top=',(s.height-430)/2].join('')))u.href=[f,p].join('');};if(/Firefox/.test(navigator.userAgent))setTimeout(a,0);else%20a();})(screen,document,encodeURIComponent,'','','http://cwb.assets.jianshu.io/notes/images/13219861/weibo/image_056b3cc4fc8c.jpg', '%E6%8E%A8%E8%8D%90 @%E6%97%A0%E5%8F%A3%E4%BC%9A%E5%92%AC%E4%BA%BA %E7%9A%84%E6%96%87%E7%AB%A0%E3%80%8A%E5%9F%BA%E4%BA%8E Scrapy-redis %E7%9A%84%E5%88%86%E5%B8%83%E5%BC%8F%E7%88%AC%E8%99%AB%E8%AE%BE%E8%AE%A1%E3%80%8B%EF%BC%88 %E5%88%86%E4%BA%AB%E8%87%AA @%E7%AE%80%E4%B9%A6 %EF%BC%89','http://www.jianshu.com/p/cd4054bbc757?utm_campaign=maleskine&utm_content=note&utm_medium=reader_share&utm_source=weibo','%E9%A1%B5%E9%9D%A2%E7%BC%96%E7%A0%81gb2312|utf-8%E9%BB%98%E8%AE%A4gb2312'));) [**](http://cwb.assets.jianshu.io/notes/images/13219861/weibo/image_056b3cc4fc8c.jpg) [更多分享](javascript:void(0);)
-
-![Web note ad 1](http://cdn2.jianshu.io/assets/web/web-note-ad-1-10f08e404d3887d2d45a4bc8f1831403.png)
-
-[![img](http://cdn2.jianshu.io/assets/default_avatar/avatar_default-78d4d1f68984cd6d4379508dd94b4210.png)]()[登录](http://www.jianshu.com/sign_in?utm_source=desktop&utm_medium=not-signed-in-comment-form) 后发表评论
-
-评论
-
-智慧如你，不想[发表一点想法](http://www.jianshu.com/sign_in?utm_source=desktop&utm_medium=not-signed-in-nocomments-text)咩~
-
-- [**](javascript:void(0);)
