@@ -1,4 +1,4 @@
-## Docker 学习笔记
+Docker 学习笔记
 
 ### Docker环境安装
 
@@ -302,7 +302,7 @@ https://yeasy.gitbooks.io/docker_practice/content/underly/network.html
 
   ```
   docker tag IMAGEID(镜像id) REPOSITORY:TAG（仓库：标签）
-
+  
   #例子
   docker tag ca1b6b825289 registry.cn-hangzhou.aliyuncs.com/xxxxxxx:v1.0
   ```
@@ -325,7 +325,7 @@ https://yeasy.gitbooks.io/docker_practice/content/underly/network.html
 
   ```
   Usage: docker rmi IMAGE [IMAGE...] Remove one or more images
-
+  
     -f, --force=false Force removal of the image # 强制移除镜像不管是否有容器使用该镜像 --no-prune=false Do not delete untagged parents # 不要删除未标记的父镜像 
   ```
 
@@ -341,7 +341,7 @@ https://yeasy.gitbooks.io/docker_practice/content/underly/network.html
 
   ```
   docker rmi `docker images | grep "^<none>" | awk '{print $3}'`
-
+  
   docker rmi `docker images -f "dangling=true" -q`
   ```
 
@@ -357,6 +357,14 @@ https://yeasy.gitbooks.io/docker_practice/content/underly/network.html
 
   如果只使用-t参数，则可以看到一个console窗口，但是执行命令会发现由于没有获得stdin 
   的输出，无法看到命令执行情况。
+
+- 将容器转化为镜像
+
+  ```
+  
+  ```
+
+  
 
 
 # 容器相关命令
@@ -390,7 +398,6 @@ https://yeasy.gitbooks.io/docker_practice/content/underly/network.html
   ```
 
   注意  docker rm 命令是删除容器，不要混淆。
-
 
 -------
 - Docker 容器中常用功能
@@ -670,7 +677,7 @@ some-db
 
 
 
->
+>配置范围内的IP访问
 
 ```
 docker run --name my-mongo -v /Users/weicheng/data/mongo:/data/db -p 27017:27017  -d mongo:3.7 mongod -bind_ip 10.10.10.*
@@ -678,7 +685,7 @@ docker run --name my-mongo -v /Users/weicheng/data/mongo:/data/db -p 27017:27017
 
 
 
-## Redis
+### Redis
 
 >  数据存储位置
 
