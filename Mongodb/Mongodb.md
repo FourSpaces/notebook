@@ -281,9 +281,12 @@ MongoDB 在 bin 目录下提供了一系列有用的工具，这些工具提供�
     ```
 
   - 导入csv  数据到数据库中
-    ···
+
+    ```
     mongoimport --db network1 --collection networkmanagement --type csv --headerline --ignoreBlanks --file /home/erik/Documents/networkmanagement-1.csv
-    ···
+    ```
+
+    
 
 - 导出数据到数据库
   - 导出数据到 csv 文件中
