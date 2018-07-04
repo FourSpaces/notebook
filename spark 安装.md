@@ -13,6 +13,7 @@ wget https://downloads.lightbend.com/scala/2.11.12/scala-2.11.12.tgz
 ### 运行
 
 ```
+# 现开启ssh 服务
 # 启动hadoop HDFS文件系统
 start-dfs.sh
 # 启动spark

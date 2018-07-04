@@ -307,7 +307,6 @@ https://yeasy.gitbooks.io/docker_practice/content/underly/network.html
   docker tag ca1b6b825289 registry.cn-hangzhou.aliyuncs.com/xxxxxxx:v1.0
   ```
 
-  ​
 
 - 查看Docker 容器运行列表。
 
@@ -329,12 +328,13 @@ https://yeasy.gitbooks.io/docker_practice/content/underly/network.html
     -f, --force=false Force removal of the image # 强制移除镜像不管是否有容器使用该镜像 --no-prune=false Do not delete untagged parents # 不要删除未标记的父镜像 
   ```
 
-  ​
-
 - 删除所有停止的容器
 
   ```
   docker rm $(docker ps -a -q)
+  # 或者 删除 包含 bin/bash start.sh 字符串的容器
+  docker rm `docker ps -a | grep "bin/bash start.sh" | awk '{print $1}'`
+
   ```
 
 - 删除所有 none 的镜像
@@ -645,11 +645,44 @@ Run 'docker COMMAND --help' for more information on a command.
 
 
 
+## 限制资源
+
+#### 内存限额
+
+与操作系统类似，容器可使用的内存包括两部分：物理内存和 swap。 Docker 通过下面两组参数来控制容器内存的使用量。
+
+1. `-m` 或 `--memory`：设置内存的使用限额，例如 100M, 2G。
+2. `--memory-swap`：设置 **内存+swap** 的使用限额。
+
+当我们执行如下命令：
+
+docker run -m 200M --memory-swap=300M ubuntu
+
+其含义是允许该容器最多使用 200M 的内存和 100M 的 swap。默认情况下，上面两组参数为 -1，即对容器内存和 swap 的使用没有限制。
+
+下面我们将使用 progrium/stress 镜像来学习如何为容器分配内存。该镜像可用于对容器执行压力测试。执行如下命令：
+
+docker run -it -m 200M --memory-swap=300M progrium/stress --vm 1 --vm-bytes 280M
+
+`--vm 1`：启动 1 个内存工作线程。
+
+`--vm-bytes 280M`：每个线程分配 280M 内存。
+
+
+
+
+
 # 热门镜像
 
 ### Mongodb
 
 https://blog.igevin.info/posts/docker-mongo-auth/
+
+```
+docker pull mongo:3.7
+```
+
+
 
 > 数据存储位置
 
@@ -681,6 +714,12 @@ some-db
 
 ```
 docker run --name my-mongo -v /Users/weicheng/data/mongo:/data/db -p 27017:27017  -d mongo:3.7 mongod -bind_ip 10.10.10.*
+```
+
+>  配置用户名 和 密码
+
+```
+docker run --name my-mongo -v ~/data_db/mongodb:/data/db  -p 27017:27017 --env MONGO_INITDB_ROOT_USERNAME=root --env MONGO_INITDB_ROOT_PASSWORD=123456 -d mongo:3.7 
 ```
 
 

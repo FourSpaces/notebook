@@ -1,14 +1,3 @@
-mongod.exe --bind_ip yourIPadress --logpath "C:\data\dbConf\mongodb.log" --logappend --dbpath "C:\data\db" --port yourPortNumber --serviceName "YourServiceName" --serviceDisplayName "YourServiceName" --install
-
-
-
-mongod --dbpath /data/mongodb/db --logpath /data/mongodb/log/mongodb.log --logappend
-
-all output going to: /data/mongodb/log/mongodb.log
-
-
-mongod --dbpath /data/mongodb/db --logpath /data/mongodb/log/mongodb.log --logappend 
-
 
 # 教程链接地址：http://blog.csdn.net/flyfish111222/article/details/51886787
 -------------------------------------------------------------
@@ -17,15 +6,14 @@ mongod --dbpath /data/mongodb/db --logpath /data/mongodb/log/mongodb.log --logap
 ## MongoDB 基础
 
 SQL术语/概念    | 	MongoDB术语/概念  |   解释/说明
-
-—|—|—
-
-database  |	database 	|   数据库
-table       |   collection 	|   数据库表/集合（一组文档）
-row 	    |   document 	|   数据记录行/文档
-column      |   field 	        |   数据字段/域
-index 	    |   index 	        |   索引
+— | — | — 
+database    |	database 		|   数据库
+table      	    |   collection 		|   数据库表/集合（一组文档）
+row 	    |   document 		|   数据记录行/文档
+column      |   field 	        	|   数据字段/域
+index 	    |   index 	        	|   索引
 table joins |	表连接,MongoDB | 不支持
+
 
 primary key |	primary key 	|   主键,MongoDB自动将_id字段设置为主键
 --------------------------------------------------------------
@@ -110,10 +98,6 @@ MongoDB 在 bin 目录下提供了一系列有用的工具，这些工具提供�
   ```
   http://localhost:28017
   ```
-
-
-
-
 
 
 
@@ -281,9 +265,12 @@ MongoDB 在 bin 目录下提供了一系列有用的工具，这些工具提供�
     ```
 
   - 导入csv  数据到数据库中
-    ···
+
+    ```
     mongoimport --db network1 --collection networkmanagement --type csv --headerline --ignoreBlanks --file /home/erik/Documents/networkmanagement-1.csv
-    ···
+    ```
+
+    
 
 - 导出数据到数据库
   - 导出数据到 csv 文件中

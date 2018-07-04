@@ -8,7 +8,21 @@ git remote add origin git@github.com:zaoshu/tianqibao.git
 
 git push origin master
 
-####  
+
+
+#### 查看git 公钥
+
+```
+
+```
+
+ 
+
+
+
+[.gitignore](https://help.github.com/articles/ignoring-files/) 用于忽略你不想提交到Git上的文件
+
+[.gitattribute](https://git-scm.com/book/zh/v1/%E8%87%AA%E5%AE%9A%E4%B9%89-Git-Git%E5%B1%9E%E6%80%A7) 指定非文本文件的对比合并方式
 
 #### cd  到指定目录下，添加本地仓库
 
