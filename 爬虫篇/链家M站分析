@@ -1,0 +1,9 @@
+curl 'https://m.lianjia.com/sh/jingjiren?page_size=15&_t=1&offset=270' 
+-H 'Cookie: lianjia_uuid=bfffe2e6-b44f-4b57-b1bd-40a7e5ebac96; _ga=GA1.2.214867640.1525681355; _gid=GA1.2.1725358389.1525681355; UM_distinctid=16339b1f9a91e4-075c86574331fa-74286336-40da8-16339b1f9aa63e; Hm_lvt_9152f8221cb6243a53c83b956842be8a=1525681355,1525760263; lianjia_ssid=a84bb1d9-2c0e-4b80-be68-59af55ea2604; CNZZDATA1254525948=861175162-1525677128-https%253A%252F%252Fm.baidu.com%252F%7C1525834493; select_city=310000; Hm_lpvt_9152f8221cb6243a53c83b956842be8a=1525835699; CNZZDATA1253491255=331757281-1525677275-https%253A%252F%252Fm.baidu.com%252F%7C1525833919' 
+-H 'Accept-Encoding: gzip, deflate, br' 
+-H 'Accept-Language: zh-CN,zh;q=0.9,en;q=0.8'
+-H 'Accept: application/json' 
+-H 'Referer: https://m.lianjia.com/sh/jingjiren' 
+-H 'X-Requested-With: XMLHttpRequest' 
+-H 'Connection: keep-alive' --compressed
+-H 'User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.139 Safari/537.36' 

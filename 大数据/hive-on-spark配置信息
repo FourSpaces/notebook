@@ -1,0 +1,50 @@
+/usr/local/scala
+
+
+./dev/make-distribution.sh --name "hadoop2-without-hive" --tgz "-Pyarn,hadoop-provided,hadoop-2.7,parquet-provided"
+
+
+- hive
+
+./dev/make-distribution.sh --name "hadoop2-without-hive" --mvn ${MAVEN_HOME}/bin/mvn --tgz "-Pyarn,hadoop-provided,hadoop-2.7,parquet-provided "
+
+
+make-distribution.sh --name custom-spark --tgz  --mvn ${MAVEN_HOME}/bin/mvn -Phadoop-2.4 -Phive -Phive-thriftserver -Pmesos -Pyarn
+
+- spark
+
+./dev/make-distribution.sh --name "hadoop2-without-hive2" --mvn ${MAVEN_HOME}/bin/mvn --pip --r --tgz "-Psparkr, -Phadoop-2.7, -Phive, -Phive-thriftserver, -Pmesos, -Pyarn" 
+
+
+./dev/make-distribution.sh --name hadoop2-without-hive2 --mvn ${MAVEN_HOME}/bin/mvn  --tgz  -Phadoop-2.7 -Phive -Phive-thriftserver -Pyarn
+
+./dev/make-distribution.sh --name "hadoop2-without-hive" --mvn ${MAVEN_HOME}/bin/mvn --tgz "-Pyarn,hadoop-provided,parquet-provided,-Phadoop-2.7,-Phive,-Phive-thriftserver,-DskipTests"
+
+./dev/make-distribution.sh --name custom-spark --tgz  --mvn ${MAVEN_HOME}/bin/mvn -Phadoop-2.7 -Phive -Phive-thriftserver -Pmesos -Pyarn
+
+./dev/make-distribution.sh --name h27hive --mvn ${MAVEN_HOME}/bin/mvn --tgz -Pyarn -Phadoop-2.7 -Dhadoop.version=2.7.6 -Phive -Phive-thriftserver -DskipTests
+
+./dev/make-distribution.sh --name "hadoop2-without-hive" --tgz "-Pyarn,hadoop-provided,hadoop-2.7,parquet-provided"
+
+# 配置spark
+
+# export SCALA_HOME=/usr/local/scala
+
+export SPARK_DIST_CLASSPATH=$(/usr/local/webserver/hadoop-2.9.1 classpath)
+export JAVA_HOME=/usr/lib/jvm/default-java
+export CLASSPATH=$CLASSPATH:$HIVE_HOME/lib
+export HADOOP_CONF_DIR=$HADOOP_HOME
+export HIVE_CONF_DIR=$HIVE_HOME/conf
+export SPARK_CLASSPATH=$SPARK_CLASSPATH:$HIVE_HOME/lib/mysql-connector-java-5.1.40-bin.jar 
+
+
+./dev/make-distribution.sh --mvn ${MAVEN_HOME}/bin/mvn --name h29hive --tgz -Pyarn -Phadoop-2.7  -Dhadoop.version=2.7.6 -Phive -Phive-thriftserver -DskipTests
+
+./build/mvn -Pyarn -Phadoop-2.7 -Dhadoop.version=2.7.3 -DskipTests clean package
+
+./dev/make-distribution.sh --mvn ${MAVEN_HOME}/bin/mvn --name h29hive --tgz -Pyarn -Phadoop-2.7  -Phive -Phive-thriftserver -DskipTests
+
+
+./dev/make-distribution.sh --mvn ${MAVEN_HOME}/bin/mvn --name h29hive --tgz -Phadoop-2.4 -Pyarn -DskipTests -Dhadoop.version=2.4.1 -Phive -Phive-thriftserver
+
+./dev/make-distribution.sh --mvn ${MAVEN_HOME}/bin/mvn —tgz —name h27hive -Pyarn -Phadoop-2.7 -Dhadoop.version=2.7.1 -Phive -Phive-thriftserver -DskipTests

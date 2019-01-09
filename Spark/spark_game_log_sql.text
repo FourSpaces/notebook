@@ -1,0 +1,46 @@
+"SELECT * FROM (SELECT
+                packageName,
+                -- 玩的人数
+                COUNT (DISTINCT onlyID) as playUserNum,
+                -- 玩的总次数
+                SUM (playNum) as playNum,
+                -- 玩的总时间
+                SUM (playTime) as playTime,
+                -- 玩的总天数
+                SUM (playDays) as playDays,
+                -- 平均每个人玩的次数
+                SUM (playNum) / COUNT (DISTINCT onlyID) as playNumPerUser,
+                -- 平均每个人玩的时间
+                SUM (playTime) / COUNT (DISTINCT onlyID) as playTimePerUser,
+                -- 平均每个人玩的天数
+                SUM (playDays) / COUNT (DISTINCT onlyID) as playDaysPerUser,
+                -- 平均每个人每次玩的平均时间
+                SUM (avgPlayTime) / COUNT (DISTINCT onlyID) as avgPlayTimePerUser,
+                -- 平均每个人玩的平均天数
+                SUM (avgPlayNumByDay) / COUNT (DISTINCT onlyID) as avgPlayNumByDayPerUser
+
+                FROM( SELECT
+                        onlyID,
+                        packageName,
+                        COUNT (1) as playNum,
+                        SUM (CASE WHEN playtime > 3*60 THEN 0 ELSE playtime END) as playTime,
+                        COUNT (DISTINCT actionTimeDay) as playDays,
+                        -- 每次玩的平均时间
+                        AVG (CASE WHEN playTime > 3*60 THEN 0 ELSE playTime END) as avgPlayTime,
+                        -- 每天玩的平均次数
+                        COUNT (1) / COUNT (DISTINCT actionTimeDay) as avgPlayNumByDay
+
+                        FROM (
+                                SELECT
+                                packageName,
+                                onlyID,
+                                actionType,
+                                SUBSTRING (actionTime, 0, 10) as actionTimeDay,
+                                -- 转成分钟
+                                CAST(playTime as DOUBLE) / (60*1000) as playTime
+
+                                FROM actionPlayGame
+                        ) a
+                        GROUP BY onlyID, packageName
+                    ) b
+                GROUP BY packageName) c
