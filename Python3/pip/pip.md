@@ -1,3 +1,15 @@
+### 安装
+
+```
+curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
+scp hadoop11.bigdata.org:~/get-pip.py .
+python get-pip.py
+pip --version
+pip install -U pip -i https://pypi.doubanio.com/simple
+pip install requests -i https://pypi.doubanio.com/simple
+```
+
+
 
 #pip
 

@@ -1,10 +1,44 @@
 # Jenkins 构建 docker (对spdier项目打包)
 
+### 生成 Jenkins-docker 镜像
+
+ 使用jenkins 镜像来构建
+
+Dockerfile
+
+```
+FROM jenkins/jenkins:lts
+
+COPY ./debian_9_ali.list /etc/apt/sources.list
+ 
+USER root
+RUN apt-get update \
+      && apt-get install -y sudo \
+      && rm -rf /var/lib/apt/lists/*
+RUN echo "jenkins ALL=NOPASSWD: ALL" >> /etc/sudoers
+ 
+USER jenkins
+```
+
+debian_9_ali.list
+
+```
+deb http://mirrors.aliyun.com/debian stretch main contrib non-free
+deb http://mirrors.aliyun.com/debian stretch-proposed-updates main contrib non-free
+deb http://mirrors.aliyun.com/debian stretch-updates main contrib non-free
+
+deb-src http://mirrors.aliyun.com/debian stretch main contrib non-free
+deb-src http://mirrors.aliyun.com/debian stretch-proposed-updates main contrib non-free
+deb-src http://mirrors.aliyun.com/debian stretch-updates main contrib non-free
+
+deb http://mirrors.aliyun.com/debian-security/ stretch/updates main non-free contrib
+deb-src http://mirrors.aliyun.com/debian-security/ stretch/updates main non-free contrib
+
+```
 
 
-使用jenkins 镜像来构建
 
-先给指定目录赋予 权限
+### 先给宿主机器 指定目录赋予 权限
 
 ```
 cd /var/run
@@ -16,6 +50,8 @@ sudo chown -R 1000 docker
 ```
 
 
+
+### 运行镜像
 
 ```
 # linux 
@@ -181,7 +217,6 @@ docker run --name=jenkins-docker -p 8080:8080 -p 50000:50000 -d  -v /Users/weich
 ```
 设置存储仓库
 - 运维人员配置存储仓库
-
 
 自动构建：
 - 将项目打包到docker 中，
